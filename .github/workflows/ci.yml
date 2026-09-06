@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --all-extras --locked
+      - run: uv run pytest
+      - run: uv build
+      - run: uv venv .wheel-smoke
+      - run: uv pip install --python .wheel-smoke/bin/python dist/*.whl
+      - run: .wheel-smoke/bin/python -c "import rigorpath_api_test, rigorpath_web_test"

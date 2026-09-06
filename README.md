@@ -2,6 +2,22 @@
 
 Project-agnostic API and Web test runtimes used by RigorPath-generated test repositories.
 
+## Install and verify
+
+`pyproject.toml` defines dependencies and `uv.lock` is the reproducible lock
+file. Use `uv` for development and CI:
+
+```bash
+uv sync --all-extras --locked
+uv run pytest
+uv build
+```
+
+For pip-based environments, install the runtime with `requirements.txt`, or
+the development and Web dependencies with `requirements-dev.txt`.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for browser setup and the release process.
+
 The repository keeps both runtimes in the existing `src/` layout:
 
 ```text
